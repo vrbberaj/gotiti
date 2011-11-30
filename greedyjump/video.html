@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="cache-control" content="no-cache">
+  <title>Greedy Jump Video</title>
+
+  <!-- Include the VideoJS Library -->
+  <script src="/scripts/video.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    VideoJS.setupAllWhenReady({
+      controlsBelow: false, // Display control bar below video instead of in front of
+      controlsHiding: true, // Hide controls when mouse is not over the video
+      defaultVolume: 0.85, // Will be overridden by user's last volume if available
+      flashVersion: 9, // Required flash version for fallback
+      linksHiding: true // Hide download links when video is supported
+    });
+  </script>
+
+  <!-- Include the VideoJS Stylesheet -->
+  <link rel="stylesheet" href="/styles/video-js.css" type="text/css" media="screen" title="Video JS">
+</head>
+<body>
+
+  <!-- Begin VideoJS -->
+  <div class="video-js-box">
+    <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
+    <video id="example_video_1" class="video-js" width="640" height="264" controls="controls" preload="auto" autoplay poster="http://video-js.zencoder.com/oceans-clip.png">
+      <source src="http://gotiti.com/greedyjump/videos/test1.mov" type='video/mov; codecs="mov"' />
+
+      <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
+      <object id="flash_fallback_1" class="vjs-flash-fallback" width="640" height="264" type="application/x-shockwave-flash"
+        data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+        <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
+        <param name="allowfullscreen" value="true" />
+        <param name="flashvars" value='config={"playlist":["http://video-js.zencoder.com/oceans-clip.png", {"url": "http://gotiti.com/greedyjump/videos/test1.mov","autoPlay":true,"autoBuffering":true}]}' />
+        <!-- Image Fallback. Typically the same as the poster image. -->
+        <img src="http://video-js.zencoder.com/oceans-clip.png" width="640" height="264" alt="Poster Image"
+          title="No video playback capabilities." />
+      </object>
+    </video>
+    <!-- Download links provided for devices that can't play video in the browser. -->
+    <p class="vjs-no-video"><strong>Download Video:</strong>
+      <a href="http://gotiti.com/greedyjump/videos/test1.mov">MP4</a>,
+    </p>
+  </div>
+  <!-- End VideoJS -->
+
+</body>
+</html>
