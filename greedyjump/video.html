@@ -20,8 +20,29 @@
 
   <!-- Include the VideoJS Stylesheet -->
   <link rel="stylesheet" href="/styles/video-js.css" type="text/css" media="screen" title="Video JS">
+  <style>
+	  
+	#wrapper {
+		/*we need to tell the browser the size of the warpper div*/
+		width:100px;
+		height:100px;
+		/*align the top left corner of the page to the center
+		of the browser*/
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		/*offset the page by half the width and height*/
+		margin-top:-50px;
+		margin-left:-50px;
+		/*allow us to see wrapper*/
+		/*background-color:red;*/
+		/*text-align:center;*/
+	}
+  </style>
 </head>
 <body>
+
+<div id="wrapper">
 
   <!-- Begin VideoJS -->
   <div class="video-js-box">
@@ -47,5 +68,6 @@
   </div>
   <!-- End VideoJS -->
 
+</div>
 </body>
 </html>
