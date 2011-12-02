@@ -1,10 +1,10 @@
 /* Document settings */
-body {background-color:#8ea370; font-family:sans-serif;}
+body {background-color:#ffffff; font-family:sans-serif;}
 a {text-decoration:underline;}
-a:link {color:#0000EE; cursor:pointer;}
+a:link {color:#403F00; cursor:pointer;}
 a:visited {color:#561A8B;}
 a:hover {color:#0000EE;}
-a * {color:#0000EE;text-decoration:underline;}
+a * {color:#403F00;text-decoration:underline;}
 sup {font-size:0.7em; vertical-align: 0.3em;}
 sub {font-size:0.7em;}
 .xr_tl {position: absolute; white-space: pre; unicode-bidi:bidi-override;}
