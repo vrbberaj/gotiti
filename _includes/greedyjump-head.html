@@ -60,6 +60,11 @@
 	var pressed=false;
 	var currentButton = -1;
 	
+	var touchScreen = false;
+	if(navigator.userAgent.match(/(iPad|iPhone|iPod)/i)){
+		touchScreen = true;
+	}
+	
 	function makeButton(buttonSelector,data,handler){
 		//makeButton(buttonSelector,[data],handler)
 	
@@ -83,33 +88,15 @@
    		var width = parseFloat(button.css('width'));
    		var height = parseFloat(button.css('height'));
    		
-   		var scaleFactor = 1.1;
+   		var scaleFactor = touchScreen ? 1.3 : 1.1;
    		
    		var newWidth = width * scaleFactor;
    		var newHeight = height * scaleFactor;
    		var newLeft = left - (newWidth - width) / 2;
    		var newTop = top - (newHeight - height) / 2;
 
-		var propertyIn = {
-			left:newLeft + 'px',
-			top:newTop + 'px',
-			width:newWidth + 'px',
-			height:newHeight + 'px'
-		};
-		var propertyOut= {
-			left:button.css('left'),
-			top:button.css('top'),
-			width:button.css('width'),
-			height:button.css('height')
-		};
-   		var duration = 30;
-   		var easingIn = "easeOutElastic";
-   		var easingOut = "easeOutBounce";
-   		
    		button.mouseenter(function(event){
-   			//alert(left + ', ' + top + ', ' + width + ', ' + height + ', ' + newLeft + ', ' + newTop + ', ' + newWidth + ', ' + newHeight);
    			currentButton = thisButton;
-	   		//button.animate(propertyIn,duration);//,easingIn);
 	   		button.css('left',newLeft);
 	   		button.css('top',newTop);
 	   		button.css('width',newWidth);
@@ -119,13 +106,18 @@
    		button.mousedown(function(event){
    			if(event.which!=1)
    				return;
-   			//alert(left + ', ' + top + ', ' + width + ', ' + height + ', ' + newLeft + ', ' + newTop + ', ' + newWidth + ', ' + newHeight);
    			currentButton = thisButton;
-	   		//button.animate(propertyIn,duration);//,easingIn);
-	   		button.css('left',left);
-	   		button.css('top',top);
-	   		button.css('width',width);
-	   		button.css('height',height);
+	   		if(touchScreen){
+				button.css('left',newLeft);
+				button.css('top',newTop);
+				button.css('width',newWidth);
+				button.css('height',newHeight);
+	   		} else {
+				button.css('left',left);
+				button.css('top',top);
+				button.css('width',width);
+				button.css('height',height);
+	   		}
    		});
    		button.mouseleave(function(event){
    			currentButton = -1;
@@ -142,10 +134,17 @@
    				return; //ignore this event
 			}
 			currentButton = -1;
-	   		button.css('left',newLeft);
-	   		button.css('top',newTop);
-	   		button.css('width',newWidth);
-	   		button.css('height',newHeight);
+	   		if(touchScreen){
+				button.css('left',left);
+				button.css('top',top);
+				button.css('width',width);
+				button.css('height',height);
+	   		} else {
+				button.css('left',newLeft);
+				button.css('top',newTop);
+				button.css('width',newWidth);
+				button.css('height',newHeight);
+	   		}
 	   		if(handler)
 		   		handler(data);
    		});
@@ -158,20 +157,65 @@
 	}
 
 	function initPage(){
+		if(touchScreen){
+			$("<style type='text/css'> #cboxOverlay { width: 20000px !important; height: 20000px !important; } </style>").appendTo("head");
+		}
+		if(touchScreen){
+			$('a.iphoness').colorbox({
+				rel:'iphoness',
+				left:'0px',
+				top:'0px',
+				//'maxHeight':"98%",
+				//'maxWidth':"98%",
+				/*width: function(){ 
+					var width = '100%', viewport = $(window).width(); 
+					alert(viewport);
+					if (viewport > 960) { 
+							width = '50%'; 
+					} else if (viewport >= 768) { 
+							width = '80%'; 
+					} 
+					return width; 
+				},*/
+				current: '{current} of {total}',
+				transition: 'none',
+				speed:0,
+			});
+			//$.scrollTo(0,0);
+		} else {
+			$('a.iphoness').colorbox({rel:'iphoness','maxHeight':"99%",'maxWidth':"99%"});
+		}
 	
 	
-		$('a.iphoness').colorbox({rel:'iphoness','maxHeight':"99%",'maxWidth':"99%"});
 
 		//Link Buttons
-		makeLinkButton("#iPhoneBuy","http://itunes.apple.com/app/greedy-jump-massively-addictive/id486182796?ls=1&mt=8");
+		makeButton("#iPhoneBuy",function(){
+			window.open("http://itunes.apple.com/app/greedy-jump-massively-addictive/id486182796?ls=1&mt=8",'_blank');
+		});
 
 		//Functional Buttons
 		makeButton("#iPhoneSS",function(){
 			$('a.iphoness:first').click();
+			if(touchScreen){
+				$.scrollTo(0,0);
+			}
 		});
 		makeButton("#iPhoneVideo",function(){
-			$.colorbox({html:$('#div_iphone_video').attr('html')});
+			if(touchScreen){
+				$.colorbox({
+					html:$('#div_iphone_video').attr('html'),
+					left:'0px',
+					top:'0px',
+					transition: 'none',
+				});
+			}else{
+				$.colorbox({
+					html:$('#div_iphone_video').attr('html'),
+				});
+			}
 		});
+		
+		//alert(navigator.userAgent);
 	}
 </script>
 
