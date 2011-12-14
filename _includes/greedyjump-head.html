@@ -50,10 +50,11 @@
 	}
 </script>
 
+
 <link rel="stylesheet" href="/styles/colorbox.css" />
 
-<script src="/scripts/jquery-1.7.1.min.js"></script>
-<script src="/scripts/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.colorbox-min.js"></script>
 
 <script>
 	var num_buttons=0;
@@ -157,9 +158,11 @@
 	}
 
 	function initPage(){
+		//alert('initpage1');
 		if(touchScreen){
 			$("<style type='text/css'> #cboxOverlay { width: 20000px !important; height: 20000px !important; } </style>").appendTo("head");
 		}
+	//	alert('initpage2');
 		if(touchScreen){
 			$('a.iphoness').colorbox({
 				rel:'iphoness',
@@ -177,15 +180,21 @@
 					} 
 					return width; 
 				},*/
-				current: '{current} of {total}',
+				current: '{current}/{total}',
 				transition: 'none',
-				speed:0,
+				speed:0
 			});
 			//$.scrollTo(0,0);
 		} else {
-			$('a.iphoness').colorbox({rel:'iphoness','maxHeight':"99%",'maxWidth':"99%"});
+			$('a.iphoness').colorbox({
+				rel:'iphoness',
+				maxHeight: "99%",
+				maxWidth: "99%",
+				current: '{current}/{total}'
+			});
 		}
 	
+		//alert('initpage3');
 	
 
 		//Link Buttons
@@ -193,6 +202,7 @@
 			window.open("http://itunes.apple.com/app/greedy-jump-massively-addictive/id486182796?ls=1&mt=8",'_blank');
 		});
 
+		//alert('initpage4');
 		//Functional Buttons
 		makeButton("#iPhoneSS",function(){
 			$('a.iphoness:first').click();
@@ -200,20 +210,22 @@
 				$.scrollTo(0,0);
 			}
 		});
+		//alert('initpage5');
 		makeButton("#iPhoneVideo",function(){
 			if(touchScreen){
 				$.colorbox({
 					html:$('#div_iphone_video').attr('html'),
 					left:'0px',
 					top:'0px',
-					transition: 'none',
+					transition: 'none'
 				});
 			}else{
 				$.colorbox({
-					html:$('#div_iphone_video').attr('html'),
+					html:$('#div_iphone_video').attr('html')
 				});
 			}
 		});
+		//alert('initpage6');
 		
 		//alert(navigator.userAgent);
 	}
