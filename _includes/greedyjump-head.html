@@ -13,36 +13,184 @@
 <meta itemprop="image" content="http://gotiti.com/greedyjump/images/greedyjump.png">
 
 <meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
 
 <title> Greedy Jump - iPhone, iPad, iPod Touch Game - titi technologies</title>
 
 <style>
-	body {background-color:#8ea370;}
 
-	.likes  {position:absolute;left:400px; top:520px;}
-	  .fb-like{position:absolute;left:0px; top:0px;}
-	  #tw-like{position:absolute;left:120px; top:0px;}
-	  #gplus  {position:absolute;left:260px; top:0px;}
+	body {background-color:#8ea370;}
+	#innerbg{background-color:#bddbb3; width: 955px; height: 1650px; top:0px; left:50%; margin-left: -477px;}
+
+	.likes  {position:absolute;left:472px; top:695px;}
+	  .fb-like{position:absolute;left:35px; top:15px;}
+	  #tw-like{position:absolute;left:120px; top:15px;}
+	  #gplus  {position:absolute;left:205px; top:15px;}
+	  #stumble{position:absolute;left:290px; top:15px;}
+	  #share{position:absolute;left:375px; top:15px;}
 	  
-	  .fb-comments{position:absolute;left:0px; top:10px; width:550px; 
-	  			   height:465px; overflow:auto;}
+	  .fb-comments{position:absolute;left:0px; top:22px; width:480px; 
+	  			   height:790px; overflow:auto;}
 	
 	#video{position:absolute;left:10px; top:520px; height:480px; overflow:hidden;}
+	
+	#hidden{
+		position:absolute;
+		visibility:hidden;
+	}	
 </style>
 
-  <!-- Include the VideoJS Library -->
-  <script src="/scripts/video.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	function endsWith(str, suffix) {
+		return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+	//alert(document.URL);
+	if(endsWith(document.URL,'index.html') || endsWith(document.URL,'index.htm')){
+		window.location = "/greedyjump/";
+	}
+</script>
 
-  <script type="text/javascript">
-    VideoJS.setupAllWhenReady({
-      controlsBelow: false, // Display control bar below video instead of in front of
-      controlsHiding: true, // Hide controls when mouse is not over the video
-      defaultVolume: 0.85, // Will be overridden by user's last volume if available
-      flashVersion: 9, // Required flash version for fallback
-      linksHiding: true // Hide download links when video is supported
-    });
-  </script>
+<link rel="stylesheet" href="/styles/colorbox.css" />
 
-  <!-- Include the VideoJS Stylesheet -->
-  <link rel="stylesheet" href="/styles/video-js.css" type="text/css" media="screen" title="Video JS">
+<script src="/scripts/jquery-1.7.1.min.js"></script>
+<script src="/scripts/jquery.colorbox-min.js"></script>
+
+<script>
+	var num_buttons=0;
+	var pressed=false;
+	var currentButton = -1;
+	
+	function makeButton(buttonSelector,data,handler){
+		//makeButton(buttonSelector,[data],handler)
+	
+		//eg: makeButton("#myButton1",{},function(){alert(buttonSelector + ' clicked')});
+		
+		if(handler){
+			//nothing to do
+		} else {
+			handler = data;
+			data = null;
+		}
+		
+		num_buttons++;
+		var thisButton = num_buttons;
+
+   		var button = $(buttonSelector);
+   		button.css('cursor','pointer');
+   		
+   		var left = parseFloat(button.css('left'));
+   		var top = parseFloat(button.css('top'));
+   		var width = parseFloat(button.css('width'));
+   		var height = parseFloat(button.css('height'));
+   		
+   		var scaleFactor = 1.1;
+   		
+   		var newWidth = width * scaleFactor;
+   		var newHeight = height * scaleFactor;
+   		var newLeft = left - (newWidth - width) / 2;
+   		var newTop = top - (newHeight - height) / 2;
+
+		var propertyIn = {
+			left:newLeft + 'px',
+			top:newTop + 'px',
+			width:newWidth + 'px',
+			height:newHeight + 'px'
+		};
+		var propertyOut= {
+			left:button.css('left'),
+			top:button.css('top'),
+			width:button.css('width'),
+			height:button.css('height')
+		};
+   		var duration = 30;
+   		var easingIn = "easeOutElastic";
+   		var easingOut = "easeOutBounce";
+   		
+   		button.mouseenter(function(event){
+   			//alert(left + ', ' + top + ', ' + width + ', ' + height + ', ' + newLeft + ', ' + newTop + ', ' + newWidth + ', ' + newHeight);
+   			currentButton = thisButton;
+	   		//button.animate(propertyIn,duration);//,easingIn);
+	   		button.css('left',newLeft);
+	   		button.css('top',newTop);
+	   		button.css('width',newWidth);
+	   		button.css('height',newHeight);
+   		});
+
+   		button.mousedown(function(event){
+   			if(event.which!=1)
+   				return;
+   			//alert(left + ', ' + top + ', ' + width + ', ' + height + ', ' + newLeft + ', ' + newTop + ', ' + newWidth + ', ' + newHeight);
+   			currentButton = thisButton;
+	   		//button.animate(propertyIn,duration);//,easingIn);
+	   		button.css('left',left);
+	   		button.css('top',top);
+	   		button.css('width',width);
+	   		button.css('height',height);
+   		});
+   		button.mouseleave(function(event){
+   			currentButton = -1;
+	   		button.css('left',left);
+	   		button.css('top',top);
+	   		button.css('width',width);
+	   		button.css('height',height);
+   		});
+   		button.mouseup(function(){
+   			if(event.which!=1)
+   				return;
+   			if(currentButton!=thisButton){
+   				currentButton = -1;
+   				return; //ignore this event
+			}
+			currentButton = -1;
+	   		button.css('left',newLeft);
+	   		button.css('top',newTop);
+	   		button.css('width',newWidth);
+	   		button.css('height',newHeight);
+	   		if(handler)
+		   		handler(data);
+   		});
+	}
+
+	function makeLinkButton(buttonSelector,url){
+		makeButton(buttonSelector,function(){
+			document.location.href = url;
+		});
+	}
+
+	function initPage(){
+	
+	
+		$('a.iphoness').colorbox({rel:'iphoness','maxHeight':"99%",'maxWidth':"99%"});
+
+		//Link Buttons
+		makeLinkButton("#iPhoneBuy","http://itunes.apple.com/app/greedy-jump-massively-addictive/id486182796?ls=1&mt=8");
+
+		//Functional Buttons
+		makeButton("#iPhoneSS",function(){
+			$('a.iphoness:first').click();
+		});
+		makeButton("#iPhoneVideo",function(){
+			$.colorbox({html:$('#div_iphone_video').attr('html')});
+		});
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

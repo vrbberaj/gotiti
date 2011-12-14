@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
+
+	<style>
+		body{
+			width:460px;
+			font-family:"Lucida Grande";
+			font-size:12px;
+			font-variant:normal;
+			font-weight:normal;
+			/*Myriad,Myriad Pro, Myriad Pro Semibold,Lucida Grande*/
+		}
+	</style>
+	
+	<script type="text/javascript">
+	function replaceAll(txt, replace, with_this) {
+  return txt.replace(new RegExp(replace, 'g'),with_this);
+}
+	function breaklines(){
+		var text = document.getElementById("aa").innerHTML;
+		var lines = text.split("\n");
+		var i,len=lines.length;
+		text = "";
+		for(i=0;i<len;i++){
+			text = text + lines[i] + " <br/> ";
+		}
+		document.body.innerHTML = text;
+	}
+	</script>
+	
+</head>
+
+<body style="" onload="javascript:breaklines();">
+<div id="aa">
+{{ content }}
+</div>
+</body>
+</html>
