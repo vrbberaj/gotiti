@@ -158,6 +158,9 @@
 	}
 
 	function initPage(){
+		//make contact us workable in IE
+		$('#ContactUs').attr('name','ContactUs');
+	
 		//alert('initpage1');
 		if(touchScreen){
 			$("<style type='text/css'> #cboxOverlay { width: 20000px !important; height: 20000px !important; } </style>").appendTo("head");
