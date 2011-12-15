@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="cache-control" content="no-cache">
+	
+	<title> Greedy Jump - iPhone, iPad, iPod Touch Game - titi games </title>
+	<script type="text/javascript" src="/scripts/jquery-1.7.1.min.js"></script>
+	<!--script type="text/javascript" src="/scripts/jquery.doubletap.js"></script-->
+
+
+<script>
+	var touchScreen = false;
+	if(navigator.userAgent.match(/(iPad|iPhone|iPod)/i)){
+		touchScreen = true;
+	}
+	var startX=0;
+	var touched=false;
+	
+	$().ready(function(){
+		var height = $(window).height()-20;
+		//alert(height);
+		var width = (height/960 * 640);
+		$('img').attr({
+			width: width + 'px',
+			height: height + 'px'
+		});
+		
+		$('body').attr('width',(5*width+20)+'px');
+		
+		if(touchScreen){
+			/*$('body').addSwipeEvents(function(evt,touch){
+				$('#test').html($('#test').html()+', '+touch.eventType);
+			});*/
+		}
+	});
+
+</script>
+
+</head>
+
+<body style="white-space:nowrap;border:0;margin:0;vertical-align:center;">
+	<span id="test"></span>
+	<img style="display:inline;" src="../images/screenshots/iPhoneSS1.jpg"/>
+	<img style="display:inline;" src="../images/screenshots/iPhoneSS2.jpg"/>
+	<img style="display:inline;" src="../images/screenshots/iPhoneSS3.jpg"/>
+	<img style="display:inline;" src="../images/screenshots/iPhoneSS4.jpg"/>
+	<img style="display:inline;" src="../images/screenshots/iPhoneSS5.jpg"/>
+	
+
+</body>
+</html>

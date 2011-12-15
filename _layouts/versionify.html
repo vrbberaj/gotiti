@@ -1,0 +1,26 @@
+
+{% assign version = 1 %}
+
+{% capture jpgWithVersion %}.jpg?{{ version }}'{% endcapture %}
+{% capture pngWithVersion %}.png?{{ version }}'{% endcapture %}
+{% capture cssWithVersion %}.css?{{ version }}'{% endcapture %}
+{% capture jsWithVersion %}.js?{{ version }}'{% endcapture %}
+
+{% capture content %}{{ content | replace:".jpg'", jpgWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:".png'", pngWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:".css'", cssWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:".js'", jsWithVersion }}{% endcapture %}
+
+
+
+{% capture jpgWithVersion %}.jpg?{{ version }}"{% endcapture %}
+{% capture pngWithVersion %}.png?{{ version }}"{% endcapture %}
+{% capture cssWithVersion %}.css?{{ version }}"{% endcapture %}
+{% capture jsWithVersion %}.js?{{ version }}"{% endcapture %}
+
+{% capture content %}{{ content | replace:'.jpg"', jpgWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:'.png"', pngWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:'.css"', cssWithVersion }}{% endcapture %}
+{% capture content %}{{ content | replace:'.js"', jsWithVersion }}{% endcapture %}
+
+{{ content }}

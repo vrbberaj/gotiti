@@ -19,9 +19,9 @@
 <style>
 
 	body {background-color:#8ea370;}
-	#innerbg{background-color:#bddbb3; width: 955px; height: 1650px; top:0px; left:50%; margin-left: -477px;}
+	#innerbg{background-color:#bddbb3; width: 955px; height: 1695px; top:0px; left:50%; margin-left: -477px;}
 
-	.likes  {position:absolute;left:472px; top:695px;}
+	.likes  {position:absolute;left:472px; top:751px;}
 	  .fb-like{position:absolute;left:35px; top:10px;}
 	  #tw-like{position:absolute;left:120px; top:10px;width:85px;}
 	  #gplus  {position:absolute;left:205px; top:10px;width:85px;}
@@ -54,142 +54,55 @@
 
 <script type="text/javascript" src="/scripts/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/scripts/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.button.js"></script>
 
 <script>
-	var num_buttons=0;
-	var pressed=false;
-	var currentButton = -1;
-	
-	var touchScreen = false;
-	if(navigator.userAgent.match(/(iPad|iPhone|iPod)/i)){
-		touchScreen = true;
-	}
-	
-	function makeButton(buttonSelector,data,handler){
-		//makeButton(buttonSelector,[data],handler)
-	
-		//eg: makeButton("#myButton1",{},function(){alert(buttonSelector + ' clicked')});
-		
-		if(handler){
-			//nothing to do
-		} else {
-			handler = data;
-			data = null;
-		}
-		
-		num_buttons++;
-		var thisButton = num_buttons;
-
-   		var button = $(buttonSelector);
-   		button.css('cursor','pointer');
-   		
-   		var left = parseFloat(button.css('left'));
-   		var top = parseFloat(button.css('top'));
-   		var width = parseFloat(button.css('width'));
-   		var height = parseFloat(button.css('height'));
-   		
-   		var scaleFactor = touchScreen ? 1.3 : 1.1;
-   		
-   		var newWidth = width * scaleFactor;
-   		var newHeight = height * scaleFactor;
-   		var newLeft = left - (newWidth - width) / 2;
-   		var newTop = top - (newHeight - height) / 2;
-
-   		button.mouseenter(function(event){
-   			currentButton = thisButton;
-	   		button.css('left',newLeft);
-	   		button.css('top',newTop);
-	   		button.css('width',newWidth);
-	   		button.css('height',newHeight);
-   		});
-
-   		button.mousedown(function(event){
-   			if(event.which!=1)
-   				return;
-   			currentButton = thisButton;
-	   		if(touchScreen){
-				button.css('left',newLeft);
-				button.css('top',newTop);
-				button.css('width',newWidth);
-				button.css('height',newHeight);
-	   		} else {
-				button.css('left',left);
-				button.css('top',top);
-				button.css('width',width);
-				button.css('height',height);
-	   		}
-   		});
-   		button.mouseleave(function(event){
-   			currentButton = -1;
-	   		button.css('left',left);
-	   		button.css('top',top);
-	   		button.css('width',width);
-	   		button.css('height',height);
-   		});
-   		button.mouseup(function(event){
-   			if(event.which!=1)
-   				return;
-   			if(currentButton!=thisButton){
-   				currentButton = -1;
-   				return; //ignore this event
-			}
-			currentButton = -1;
-	   		if(touchScreen){
-				button.css('left',left);
-				button.css('top',top);
-				button.css('width',width);
-				button.css('height',height);
-	   		} else {
-				button.css('left',newLeft);
-				button.css('top',newTop);
-				button.css('width',newWidth);
-				button.css('height',newHeight);
-	   		}
-	   		if(handler)
-		   		handler(data);
-   		});
-	}
-
-	function makeLinkButton(buttonSelector,url){
-		makeButton(buttonSelector,function(){
-			document.location.href = url;
-		});
-	}
 
 	function initPage(){
 		//make contact us workable in IE
-		$('#ContactUs').attr('name','ContactUs');
+		$('#MailUs').attr('name','MailUs');
+		$('#Copy div div span a').zclip({
+			path:'/scripts/ZeroClipboard.swf',
+	        copy:function(){return 'contactus@gotiti.com';},
+	        afterCopy:function(){ 
+		        $('#Copy div div span a').zclip('remove');
+	        	$('#Copy div div span').html('copied'); 
+	        }
+		});
+		
 	
 		//alert('initpage1');
 		if(touchScreen){
 			$("<style type='text/css'> #cboxOverlay { width: 20000px !important; height: 20000px !important; } </style>").appendTo("head");
 		}
-	//	alert('initpage2');
+
 		if(touchScreen){
 			$('a.iphoness').colorbox({
 				rel:'iphoness',
 				left:'0px',
 				top:'0px',
-				//'maxHeight':"98%",
-				//'maxWidth':"98%",
-				/*width: function(){ 
-					var width = '100%', viewport = $(window).width(); 
-					alert(viewport);
-					if (viewport > 960) { 
-							width = '50%'; 
-					} else if (viewport >= 768) { 
-							width = '80%'; 
-					} 
-					return width; 
-				},*/
 				current: '{current}/{total}',
 				transition: 'none',
 				speed:0
 			});
-			//$.scrollTo(0,0);
+			$('a.ipadss').colorbox({
+				rel:'ipadss',
+				left:'0px',
+				top:'0px',
+				current: '{current}/{total}',
+				transition: 'none',
+				speed:0
+			});
 		} else {
 			$('a.iphoness').colorbox({
 				rel:'iphoness',
+				maxHeight: "99%",
+				maxWidth: "99%",
+				current: '{current}/{total}'
+			});
+			$('a.ipadss').colorbox({
+				rel:'ipadss',
 				maxHeight: "99%",
 				maxWidth: "99%",
 				current: '{current}/{total}'
@@ -199,23 +112,30 @@
 		//alert('initpage3');
 	
 
-		//Link Buttons
 		makeButton("#iPhoneBuy",function(){
 			window.open("http://itunes.apple.com/app/greedy-jump-massively-addictive/id486182796?ls=1&mt=8",'_blank');
 		});
 		makeButton("#iPhoneFree",function(){
 			window.open("http://itunes.apple.com/app/greedy-jump-lite-massively/id487136577?ls=1&mt=8",'_blank');
 		});
-
-		//alert('initpage4');
-		//Functional Buttons
 		makeButton("#iPhoneSS",function(){
-			$('a.iphoness:first').click();
-			if(touchScreen){
-				$.scrollTo(0,0);
-			}
+			//$('a.iphoness:first').click();
+			//$.colorbox({href:'popups/iPhoneScreens.html',iframe:true,width:'99%',height:'99%'});
+			var w = $(window).width() * .9;
+			var h = $(window).height() * .9;
+			var imgH = h;
+			var imgW = (h-20)/960.0*640;
+			var html = '<div style="white-space:nowrap;">';
+			html += '<img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPhoneSS1.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPhoneSS2.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPhoneSS3.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPhoneSS4.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPhoneSS5.jpg"/>';
+			html += '</div>';
+			//alert(html);
+			$.colorbox({html:html,title:'iPhone Screenshots',innerWidth:w+'px',innerWeight:h+'px'});
+			
 		});
-		//alert('initpage5');
 		makeButton("#iPhoneVideo",function(){
 			if(touchScreen){
 				$.colorbox({
@@ -224,15 +144,61 @@
 					top:'0px',
 					transition: 'none'
 				});
+				if(touchScreen){
+					$.scrollTo(0,0);
+				}
 			}else{
 				$.colorbox({
 					html:$('#div_iphone_video').attr('html')
 				});
 			}
 		});
-		//alert('initpage6');
+
+		makeButton("#iPadBuy",function(){
+			window.open("http://itunes.apple.com/app/greedy-jump-hd-massively-addictive/id487774918?ls=1&mt=8",'_blank');
+		});
+		$('#iPadFree').css('opacity',0.2);
+		makeButton("#iPadFree",function(){
+			//window.open("http://itunes.apple.com/app/greedy-jump-hd-lite-massively/id487848134?ls=1&mt=8",'_blank');
+			$.colorbox({
+				html:'<h3>iPad Free Version Coming Soon</h3>'
+			});
+		});
+		makeButton("#iPadSS",function(){
+			//$('a.ipadss:first').click();
+			var w = $(window).width() * .9;
+			var h = $(window).height() * .9;
+			var imgH = h;
+			var imgW = (h-20)/1024.0*768;
+			var html = '<div style="white-space:nowrap;">';
+			html += '<img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPadSS1.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPadSS2.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPadSS3.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPadSS4.jpg"/>';
+			html += ' <img width="'+imgW+'px" height="'+imgH+'px" src="images/screenshots/iPadSS5.jpg"/>';
+			html += '</div>';
+			//alert(html);
+			$.colorbox({html:html,title:'iPad Screenshots',innerWidth:w+'px',innerWeight:h+'px'});
+		});
+		$('#iPadVideo').css('opacity',0.2);
+		makeButton("#iPadVideo",function(){
+			if(touchScreen){
+				$.colorbox({
+					html:$('#div_ipad_video').attr('html'),
+					left:'0px',
+					top:'0px',
+					transition: 'none'
+				});
+				if(touchScreen){
+					$.scrollTo(0,0);
+				}
+			}else{
+				$.colorbox({
+					html:$('#div_ipad_video').attr('html')
+				});
+			}
+		});
 		
-		//alert(navigator.userAgent);
 	}
 </script>
 
