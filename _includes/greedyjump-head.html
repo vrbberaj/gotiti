@@ -64,7 +64,7 @@
 		$('#MailUs').attr('name','MailUs');
 		$('#Copy div div span a').zclip({
 			path:'/scripts/ZeroClipboard.swf',
-	        copy:function(){return 'contactus@gotiti.com';},
+	        copy:function(){return 'co'+''+'nta'+'ctus'+"@"+"gotiti"+"."+'com';},
 	        afterCopy:function(){ 
 		        $('#Copy div div span a').zclip('remove');
 	        	$('#Copy div div span').html('copied'); 
@@ -157,12 +157,10 @@
 		makeButton("#iPadBuy",function(){
 			window.open("http://itunes.apple.com/app/greedy-jump-hd-massively-addictive/id487774918?ls=1&mt=8",'_blank');
 		});
-		$('#iPadFree').css('opacity',0.2);
+		//$('#iPadFree').css('opacity',0.2);
 		makeButton("#iPadFree",function(){
-			//window.open("http://itunes.apple.com/app/greedy-jump-hd-lite-massively/id487848134?ls=1&mt=8",'_blank');
-			$.colorbox({
-				html:'<h3>iPad Free Version Coming Soon</h3>'
-			});
+			window.open("http://itunes.apple.com/app/greedy-jump-hd-lite-massively/id487848134?ls=1&mt=8",'_blank');
+			//$.colorbox({html:'<h3>iPad Free Version Coming Soon</h3>'});
 		});
 		makeButton("#iPadSS",function(){
 			//$('a.ipadss:first').click();
