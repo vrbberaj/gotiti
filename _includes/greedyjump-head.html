@@ -16,10 +16,51 @@
 
 <title> Greedy Jump iPhone/iPad Game - titi technologies</title>
 
+
+<script>
+	function endsWith(str, suffix) {
+		return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+	//alert(document.URL);
+	if(endsWith(document.URL,'index.html') || endsWith(document.URL,'index.htm')){
+		window.location = "/greedyjump/";
+	}
+</script>
+
+
+<link rel="stylesheet" href="/styles/colorbox.css" />
+<link rel="stylesheet" href="/styles/nivo-slider.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript" src="/scripts/jquery.button.js"></script>
+
 <style>
 
 	body {background-color:#8ea370;}
 	#innerbg{background-color:#bddbb3; width: 955px; height: 1695px; top:0px; left:50%; margin-left: -477px;}
+	
+	.nivoSlider {
+		/*position:relative;*/
+		width:958px; /* Change this to your images width */
+		height:348px; /* Change this to your images height */
+		background:url(images/loading.gif) no-repeat 50% 50%;
+	}
+	.nivoSlider img {
+		position:absolute;
+		top:0px;
+		left:0px;
+		display:none;
+	}
+	.nivoSlider a {
+		border:0;
+		display:block;
+	}
+	#slider {
+		position:absolute; left:0px; top:40px;
+	}
 
 	.likes  {position:absolute;left:472px; top:751px;}
 	  .fb-like{position:absolute;left:35px; top:10px;}
@@ -40,38 +81,54 @@
 </style>
 
 <script>
-	function endsWith(str, suffix) {
-		return str.indexOf(suffix, str.length - suffix.length) !== -1;
-	}
-	//alert(document.URL);
-	if(endsWith(document.URL,'index.html') || endsWith(document.URL,'index.htm')){
-		window.location = "/greedyjump/";
-	}
-</script>
-
-
-<link rel="stylesheet" href="/styles/colorbox.css" />
-
-<script type="text/javascript" src="/scripts/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.colorbox-min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.button.js"></script>
-
-<script>
 
 	function initPage(){
 		//make contact us workable in IE
 		$('#MailUs').attr('name','MailUs');
 		$('#Copy div div span a').zclip({
 			path:'/scripts/ZeroClipboard.swf',
-	        copy:function(){return 'co'+''+'nta'+'ctus'+"@"+"gotiti"+"."+'com';},
+	        copy:function(){
+	        		var a ='co'+''+'nta'+'ctus';
+	        		var b = '@';
+	        		var c = "gotiti"+"."+'com';
+		        	return a+b+c;
+		        },
 	        afterCopy:function(){ 
 		        $('#Copy div div span a').zclip('remove');
 	        	$('#Copy div div span').html('copied'); 
 	        }
 		});
 		
-	
+		//put the sliding banner
+		$('#slider').nivoSlider({
+			effect: 'fade',
+			slices: 15, // For slice animations
+			boxCols: 8, // For box animations
+			boxRows: 4, // For box animations
+			animSpeed: 500, // Slide transition speed
+			pauseTime: 7000, // How long each slide will show
+			startSlide: 0, // Set starting Slide (0 index)
+			directionNav: false, // Next & Prev navigation
+			directionNavHide: true, // Only show on hover
+			controlNav: false, // 1,2,3... navigation
+			controlNavThumbs: false, // Use thumbnails for Control Nav
+			controlNavThumbsFromRel: false, // Use image rel for thumbs
+			controlNavThumbsSearch: '.jpg', // Replace this with...
+			controlNavThumbsReplace: '_thumb.jpg', // ...this in thumb Image src
+			keyboardNav: false, // Use left & right arrows
+			pauseOnHover: false, // Stop animation while hovering
+			manualAdvance: false, // Force manual transitions
+			captionOpacity: 0.8, // Universal caption opacity
+			prevText: 'Prev', // Prev directionNav text
+			nextText: 'Next', // Next directionNav text
+			randomStart: false, // Start on a random slide
+			beforeChange: function(){}, // Triggers before a slide transition
+			afterChange: function(){}, // Triggers after a slide transition
+			slideshowEnd: function(){}, // Triggers after all slides have been shown
+			lastSlide: function(){}, // Triggers when last slide is shown
+			afterLoad: function(){} // Triggers when slider has loaded
+		});
+
 		//alert('initpage1');
 		if(touchScreen){
 			$("<style type='text/css'> #cboxOverlay { width: 20000px !important; height: 20000px !important; } </style>").appendTo("head");
